@@ -15,7 +15,7 @@ export class UploadComponent {
   uploadSuccess = false;
   errorMessage = '';
 
-  private apiUrl = 'http://localhost:3000/api/upload'; // 👈 swap with your Express endpoint
+  private apiUrl = 'https://shelley-upload-client.up.railway.app/api/upload';
 
   constructor(private http: HttpClient) {}
 
