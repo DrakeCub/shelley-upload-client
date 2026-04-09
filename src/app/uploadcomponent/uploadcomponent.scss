@@ -1,0 +1,245 @@
+$red: red;
+$red-dark: #922b21;
+$red-light: #f5b7b1;
+$cream: #fdf6ec;
+$black: #1a1a1a;
+$gray-light: #f0ece4;
+$gray-mid: #c8c2b8;
+$gray-text: #6b6560;
+
+* {
+  box-sizing: border-box;
+}
+
+.page-wrapper {
+  min-height: 100vh;
+  background-color: $cream;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+// ── Header ───────────────────────────────────────────
+.header {
+  width: 100%;
+  background-color: $red;
+  padding: 2rem 1rem 2.5rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.logo-container {
+  display: flex;
+  justify-content: center;
+}
+
+.logo {
+  height: 150px;
+  width: auto;
+  object-fit: contain;
+  border-radius: 6px;
+}
+
+// ── Main ─────────────────────────────────────────────
+.main-content {
+  width: 100%;
+  max-width: 640px;
+  padding: 3rem 1.5rem 4rem;
+}
+
+// ── Card ─────────────────────────────────────────────
+.upload-card {
+  background: #fff;
+  border: 1px solid $gray-mid;
+  border-radius: 16px;
+  padding: 2.5rem 2.5rem;
+
+  .card-title {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: $black;
+    margin: 0 0 0.5rem;
+    text-align: center;
+  }
+
+  .card-subtitle {
+    font-size: 0.95rem;
+    color: $gray-text;
+    text-align: center;
+    margin: 0 0 2rem;
+    line-height: 1.6;
+  }
+}
+
+// ── Drop Zone ─────────────────────────────────────────
+.drop-zone {
+  border: 2px dashed $gray-mid;
+  border-radius: 12px;
+  background-color: $gray-light;
+  padding: 3rem 2rem;
+  text-align: center;
+  cursor: pointer;
+  transition: border-color 0.2s ease, background-color 0.2s ease;
+
+  &:hover {
+    border-color: $red;
+    background-color: lighten($red-light, 12%);
+  }
+
+  &.dragover {
+    border-color: $red;
+    background-color: lighten($red-light, 8%);
+  }
+
+  &.has-file {
+    border-style: solid;
+    border-color: $red;
+    background-color: lighten($red-light, 10%);
+  }
+
+  .drop-icon {
+    color: $red;
+    margin-bottom: 1rem;
+
+    svg {
+      display: block;
+      margin: 0 auto;
+    }
+  }
+
+  .drop-label {
+    font-size: 1rem;
+    color: $black;
+    margin: 0;
+    line-height: 1.7;
+
+    .drop-hint {
+      font-size: 0.875rem;
+      color: $gray-text;
+    }
+  }
+
+  .file-info {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+
+    .file-name {
+      font-size: 1rem;
+      font-weight: 500;
+      color: $black;
+      word-break: break-all;
+    }
+
+    .file-size {
+      font-size: 0.85rem;
+      color: $gray-text;
+    }
+  }
+}
+
+// ── Progress ──────────────────────────────────────────
+.progress-wrapper {
+  margin-top: 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+
+  .progress-bar {
+    flex: 1;
+    height: 8px;
+    background-color: $gray-light;
+    border-radius: 99px;
+    overflow: hidden;
+
+    .progress-fill {
+      height: 100%;
+      background-color: $red;
+      border-radius: 99px;
+      transition: width 0.3s ease;
+    }
+  }
+
+  .progress-label {
+    font-size: 0.85rem;
+    color: $gray-text;
+    min-width: 36px;
+    text-align: right;
+  }
+}
+
+// ── Messages ──────────────────────────────────────────
+.success-message {
+  margin-top: 1.25rem;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #1e7e34;
+  background: #eafaf1;
+  border: 1px solid #a9dfbf;
+  border-radius: 8px;
+  padding: 0.75rem 1rem;
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+.error-message {
+  margin-top: 1.25rem;
+  color: $red-dark;
+  background: lighten($red-light, 10%);
+  border: 1px solid $red-light;
+  border-radius: 8px;
+  padding: 0.75rem 1rem;
+  font-size: 0.9rem;
+}
+
+// ── Actions ───────────────────────────────────────────
+.actions {
+  margin-top: 2rem;
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+}
+
+.btn-primary {
+  background-color: $red;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 0.75rem 1.75rem;
+  font-size: 0.95rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+
+  &:hover:not(:disabled) {
+    background-color: $red-dark;
+  }
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+}
+
+.btn-secondary {
+  background-color: transparent;
+  color: $gray-text;
+  border: 1px solid $gray-mid;
+  border-radius: 8px;
+  padding: 0.75rem 1.25rem;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: border-color 0.2s ease, color 0.2s ease;
+
+  &:hover:not(:disabled) {
+    border-color: $red;
+    color: $red;
+  }
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+}
