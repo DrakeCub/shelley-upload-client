@@ -15,7 +15,7 @@ export class UploadComponent {
   uploadSuccess = false;
   errorMessage = '';
 
-  private apiUrl = 'https://shelley-upload-api.up.railway.app/api/upload';
+  private apiUrl = 'https://shelley-upload-api-production.up.railway.app/api/upload';
 
   constructor(private http: HttpClient) {}
 
