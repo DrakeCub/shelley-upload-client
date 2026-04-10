@@ -1,10 +1,12 @@
 import { Component, ChangeDetectorRef } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { trigger, transition, style, animate } from '@angular/animations';
 import { forkJoin } from 'rxjs';
 
 @Component({
   selector: 'app-upload',
+  imports: [FormsModule],
   templateUrl: './uploadcomponent.html',
   styleUrls: ['./uploadcomponent.scss'],
   animations: [
@@ -22,13 +24,32 @@ export class UploadComponent {
   isDragging = false;
   isUploading = false;
   errorMessage = '';
+  userName = '';
+  userClass = '';
 
+  private submissionUrl = 'https://shelley-upload-api-production.up.railway.app/api/submission';
   private apiUrl = 'https://shelley-upload-api-production.up.railway.app/api/upload';
 
   constructor(
     private http: HttpClient,
     private cdr: ChangeDetectorRef,
   ) {}
+
+  // Add this method and call it inside uploadVideos() after Promise.all resolves
+  saveSubmission(): void {
+    if (!this.userName && !this.userClass) return;
+
+    this.http
+      .post(this.submissionUrl, {
+        name: this.userName,
+        class: this.userClass,
+      })
+      .subscribe({
+        error: (err) => console.error('Failed to save submission:', err),
+      });
+    this.userName = '';
+    this.userClass = '';
+  }
 
   onFileSelected(event: Event): void {
     const input = event.target as HTMLInputElement;
@@ -97,6 +118,7 @@ export class UploadComponent {
         this.isUploading = false;
         this.uploadedFiles = this.selectedFiles.map((f) => f.name);
         this.selectedFiles = [];
+        this.saveSubmission();
         this.cdr.markForCheck();
       },
       error: (err) => {

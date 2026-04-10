@@ -248,6 +248,39 @@ $gray-text: #6b6560;
   &:disabled { opacity: 0.5; cursor: not-allowed; }
 }
 
+
+.field-group {
+  display: flex;
+  gap: 16px;
+  margin-bottom: 2rem;
+
+  .field {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+
+    label {
+      font-size: 0.875rem;
+      font-weight: 500;
+      color: $black;
+    }
+
+    input {
+      border: 1px solid $gray-mid;
+      border-radius: 8px;
+      padding: 0.65rem 0.9rem;
+      font-size: 0.95rem;
+      background: #fff;
+      color: $black;
+      transition: border-color 0.2s ease;
+      outline: none;
+
+      &:focus { border-color: $red; }
+      &::placeholder { color: $gray-text; }
+    }
+  }
+}
 // ── Success Toast ─────────────────────────────────────
 .success-toast {
   background: #fff;

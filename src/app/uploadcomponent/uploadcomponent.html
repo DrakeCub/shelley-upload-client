@@ -40,6 +40,18 @@
         ></video>
       </div>
 
+      <!-- Name & Class Fields -->
+      <p>Submit your name for a chance to win prizes! (optional)</p>
+      <div class="field-group">
+        <div class="field">
+          <label for="name">Name</label>
+          <input type="text" [(ngModel)]="userName" placeholder="" />
+        </div>
+        <div class="field">
+          <label for="class">Class</label>
+          <input type="text" [(ngModel)]="userClass" placeholder="" />
+        </div>
+      </div>
       <!-- Drop Zone -->
       <div
         class="drop-zone"
