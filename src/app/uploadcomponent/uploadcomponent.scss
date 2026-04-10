@@ -251,8 +251,13 @@ $gray-text: #6b6560;
 
 .field-group {
   display: flex;
+  flex-wrap: wrap;
   gap: 16px;
   margin-bottom: 2rem;
+
+  @media (max-width: 480px) {
+    flex-direction: column;
+  }
 
   .field {
     flex: 1;
