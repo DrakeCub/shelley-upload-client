@@ -9,22 +9,34 @@
   <!-- Upload Card -->
   <main class="main-content">
     <div class="upload-card">
-      <h2 class="card-title">Upload Your Video(s)</h2>
-      <p class="card-subtitle">
-        Share your performance with us. We accept MP4, MOV, and AVI files.
-      </p>
+      <h2 class="card-title">Upload Your Videos</h2>
+      <p class="card-subtitle">Share your steps! Here are the Rules:</p>
+      <ul>
+        <li>1. One dancer per video (not 2 or 3 at a time)</li>
+        <li>2. Keep footwork(legs) visible at all times</li>
+        <li>3. Record from the front (to see cross and turnout)</li>
+        <li>4. Maximum 30 second videos each. Submit as many as you'd like!</li>
+        <li>Have fun and Thank you! Your help will benefit you and future dancers!</li>
+      </ul>
 
       <!-- Drop Zone -->
       <div
         class="drop-zone"
         [class.dragover]="isDragging"
-        [class.has-file]="selectedFile"
+        [class.has-files]="selectedFiles.length"
         (dragover)="onDragOver($event)"
         (dragleave)="onDragLeave($event)"
         (drop)="onDrop($event)"
         (click)="fileInput.click()"
       >
-        <input #fileInput type="file" accept="video/*" hidden (change)="onFileSelected($event)" />
+        <input
+          #fileInput
+          type="file"
+          accept="video/*"
+          multiple
+          hidden
+          (change)="onFileSelected($event)"
+        />
 
         <div class="drop-icon">
           <svg
@@ -44,50 +56,27 @@
           </svg>
         </div>
 
-        @if (!selectedFile) {
+        @if (!selectedFiles.length) {
           <p class="drop-label">
-            Drag & drop your video here<br />
-            <span class="drop-hint">or click to browse</span>
+            Drag & drop your videos here<br />
+            <span class="drop-hint">or click to browse — multiple files supported</span>
           </p>
         }
 
-        @if (selectedFile) {
-          <div class="file-info">
-            <span class="file-name">{{ selectedFile.name }}</span>
-            <span class="file-size">{{ formatFileSize(selectedFile.size) }}</span>
+        @if (selectedFiles.length) {
+          <div class="file-list" (click)="$event.stopPropagation()">
+            @for (f of selectedFiles; track f.name; let i = $index) {
+              <div class="file-item">
+                <div class="file-item-info">
+                  <span class="file-name">{{ f.name }}</span>
+                  <span class="file-size">{{ formatFileSize(f.size) }}</span>
+                </div>
+                <button class="remove-btn" (click)="removeFile(i)">✕</button>
+              </div>
+            }
           </div>
         }
       </div>
-
-      <!-- Progress Bar -->
-      @if (isUploading) {
-        <div class="progress-wrapper">
-          <div class="progress-bar">
-            <div class="progress-fill" [style.width.%]="uploadProgress"></div>
-          </div>
-          <span class="progress-label">{{ uploadProgress }}%</span>
-        </div>
-      }
-
-      <!-- Success Message -->
-      @if (uploadSuccess) {
-        <div class="success-message">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="20"
-            height="20"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="2"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-          >
-            <polyline points="20 6 9 17 4 12" />
-          </svg>
-          Video uploaded successfully!
-        </div>
-      }
 
       <!-- Error Message -->
       @if (errorMessage) {
@@ -98,19 +87,56 @@
 
       <!-- Actions -->
       <div class="actions">
-        @if (selectedFile) {
-          <button class="btn-secondary" (click)="clearFile()" [disabled]="isUploading">
-            Clear
+        @if (selectedFiles.length) {
+          <button class="btn-secondary" (click)="clearFiles()" [disabled]="isUploading">
+            Clear All
           </button>
         }
         <button
           class="btn-primary"
-          (click)="uploadVideo()"
-          [disabled]="!selectedFile || isUploading"
+          (click)="uploadVideos()"
+          [disabled]="!selectedFiles.length || isUploading"
         >
-          {{ isUploading ? 'Uploading...' : 'Upload Video' }}
+          {{
+            isUploading
+              ? 'Uploading...'
+              : 'Upload ' +
+                selectedFiles.length +
+                (selectedFiles.length === 1 ? ' Video' : ' Videos')
+          }}
         </button>
       </div>
     </div>
+
+    <!-- Success Notification -->
+    @if (uploadedFiles.length) {
+      <div class="success-toast" [@slideIn]>
+        <div class="toast-header">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="20"
+            height="20"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2.5"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <polyline points="20 6 9 17 4 12" />
+          </svg>
+          <span
+            >{{ uploadedFiles.length }}
+            {{ uploadedFiles.length === 1 ? 'video' : 'videos' }} uploaded successfully</span
+          >
+          <button class="toast-close" (click)="uploadedFiles = []">✕</button>
+        </div>
+        <ul class="toast-file-list">
+          @for (name of uploadedFiles; track name) {
+            <li>{{ name }}</li>
+          }
+        </ul>
+      </div>
+    }
   </main>
 </div>
