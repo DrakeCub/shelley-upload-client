@@ -67,6 +67,21 @@ $gray-text: #6b6560;
   }
 }
 
+.demo-video-row {
+  display: flex;
+  gap: 0.75rem;
+  margin-bottom: 1.25rem;
+}
+
+.demo-video {
+  flex: 1 1 0;
+  min-width: 0;
+  max-height: 220px;
+  border-radius: 10px;
+  object-fit: contain;
+  background: #000;
+}
+
 .drop-zone {
   border: 2px dashed $gray-mid;
   border-radius: 12px;
